@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      overflow: hidden;
+    }
+
+    canvas {
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas></canvas>
+
+  <script>
+    const cv = document.querySelector('canvas')
+    const ctx = cv.getContext('2d')
+
+    function init() {
+      cv.width = window.innerWidth
+      cv.height = window.innerHeight
+    }
+
+    function getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    function getRandomColor() {
+      return '#' + Math.random().toString(16).slice(2,8).padEnd(6, '0')
+    }
+
+    class Point {
+      xFlag = Math.random() >= 0.5
+      yFlag = Math.random() >= 0.5
+      speed = Math.random() >= 0.5 ? 3 : 1
+      radius = Math.random() >= 0.5 ? 20 : 15
+      x = getRandom(5, window.innerWidth - this.radius)
+      y = getRandom(5, window.innerHeight - this.radius)
+      color = getRandomColor()
+      // constructor() {
+      //   this.xFlag = Math.random() >= 0.5
+      //   this.yFlag = Math.random() >= 0.5
+      //   this.speed = Math.random() >= 0.5 ? 3 : 1
+      //   this.radius = Math.random() >= 0.5 ? 20 : 15
+      //   this.x = getRandom(5, window.innerWidth - this.radius)
+      //   this.y = getRandom(5, window.innerHeight - this.radius)
+      //   this.color = getRandomColor()
+      // }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+        ctx.fillStyle = this.color
+        ctx.fill()
+      }
+    }
+
+    class Graph {
+      constructor() {
+        this.points = new Array(20).fill(0).map(() => new Point())
+        this.maxDis = Math.max(window.innerWidth / 15, 60)
+      }
+      draw() {
+        for (let i = 0; i < this.points.length; i++) {
+          const p1 = this.points[i]
+          p1.draw()
+          for (let j = i + 1; j < this.points.length; j++) {
+            const p2 = this.points[j]
+            if(Math.abs(p1.x - p2.x) < 10 && Math.abs(p1.y - p2.y) < 10) {
+              p1.color = p2.color = getRandomColor()
+            }
+          }
+        }
+      }
+    }
+
+    init()
+    let g = new Graph()
+    g.draw()
+
+    setInterval(() => {
+      g.points.forEach(item => {
+        item.x += item.xFlag ? item.speed : -item.speed
+        item.y += item.yFlag ? item.speed : -item.speed
+        if (item.x >= window.innerWidth - item.radius) item.xFlag = false
+        if (item.x <= item.radius) item.xFlag = true
+        if (item.y >= window.innerHeight - item.radius) item.yFlag = false
+        if (item.y <= item.radius) item.yFlag = true
+      })
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      g.draw()
+    }, 5)
+
+    function debounce(fn, time = 100) {
+      let timer = null
+      return function (...arg) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          fn.apply(this, arg)
+        }, time)
+      }
+    }
+
+    function throttle(fn, time = 100) {
+      let timer = null
+      return function (...arg) {
+        if (timer) return
+        timer = setTimeout(()=>{
+          fn.apply(this, arg)
+          timer = null
+        }, time)
+      }
+    }
+    
+    function resize() {
+      init()
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      g = new Graph()
+      g.draw()
+    }
+    
+    window.addEventListener('resize', throttle(resize, 100))
+  </script>
+</body>
+
+</html>
+
+
+

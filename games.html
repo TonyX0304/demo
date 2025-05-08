@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html {
+      background: rgb(132, 122, 96);
+    }
+
+    #box {
+      width: max-content;
+      /* overflow: hidden; */
+      margin: 20px auto;
+      transform: translateX(25px);
+    }
+
+    #box.done .item .point {
+      cursor: not-allowed;
+    }
+
+    .flex {
+      display: flex;
+      /* gap: 10px; */
+    }
+
+    .item {
+      border-left: 1px solid #000;
+      border-top: 1px solid #000;
+      width: 45px;
+      height: 45px;
+    }
+
+    .item:last-child {
+      border-top-color: transparent;
+    }
+
+    .item .point {
+      width: 60%;
+      height: 60%;
+      transform: translate(-50%, -50%);
+      /* background: fuchsia; */
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .item .point.disabled {
+      cursor: not-allowed;
+    }
+
+    .item .point.x {
+      background: #fff;
+    }
+
+    .item .point.y {
+      background: #000;
+    }
+
+    .item .point.win {
+      border: 5px solid greenyellow;
+      width: 50%;
+      height: 50%;
+      animation: animate 0.6s infinite ease alternate;
+    }
+
+    @keyframes animate {
+      from {
+        border-width: 0px;
+        border-color: red;
+      }
+
+      to {
+        border-width: 5px;
+        border-color: greenyellow;
+      }
+    }
+
+    .flex:last-child .item {
+      border-left-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;color: aqua;">五子棋</h1>
+  <div id="box"></div>
+  <button type="primary" onclick="reSet()" style="display: block; margin: auto;">重新开始</button>
+  <script>
+    const xLength = 20
+    const yLength = 11
+    let winner = null
+    let gaps = [...Array(yLength)].map(() => Array(xLength).fill(null))
+    let box = document.getElementById('box')
+    let divs = new DocumentFragment()
+    gaps.forEach((i, iNum) => {
+      const list = document.createElement('div')
+      list.classList.add('flex')
+      let lis = ''
+      i.forEach((j, jNum) => {
+        lis += `<div class="item"><div class="point" i="${iNum}" j="${jNum}"></div></div>`
+      })
+      list.innerHTML = lis
+      divs.append(list)
+    })
+    box.append(divs)
+
+    let player = 'x'
+    box.addEventListener('click', function (e) {
+      const target = e.target
+      if (!target.classList.contains('point') || target.classList.contains('disabled') || winner) return
+      let i = +target.getAttribute('i')
+      let j = +target.getAttribute('j')
+      gaps[i][j] = player
+      target.classList.add('disabled', player)
+      const { isWin, winIndex } = testIsWin(i, j, player)
+      if (isWin) {
+        winner = player
+        box.classList.add('done')
+        winIndex.forEach(item => {
+          box.children[item.x].children[item.y].querySelector('.point').classList.add('win')
+        })
+      }
+      player = player === 'x' ? 'y' : 'x'
+    })
+
+    function testIsWin(i, j, player) {
+      // 横向
+      const { isWin: win1, winIndex: winIndex1 } = testHorizontal(i, j, player)
+      if (win1) {
+        console.log('横向赢:', win1, winIndex1)
+        return { isWin: win1, winIndex: winIndex1 }
+      }
+      // 纵向
+      const { isWin: win2, winIndex: winIndex2 } = testVertical(i, j, player)
+      if (win2) {
+        console.log('纵向赢:', win2, winIndex2)
+        return { isWin: win2, winIndex: winIndex2 }
+      }
+      // 斜向1 ↘
+      const { isWin: win3, winIndex: winIndex3 } = testDiagonal(i, j, player)
+      if (win3) {
+        console.log('斜向1↘:', win3, winIndex3)
+        return { isWin: win3, winIndex: winIndex3 }
+      }
+      // 斜向2 ↗
+      const { isWin: win4, winIndex: winIndex4 } = testDiagonal2(i, j, player)
+      if (win4) {
+        console.log('斜向2↗:', win4, winIndex4)
+        return { isWin: win4, winIndex: winIndex4 }
+      }
+      return { isWin: false }
+    }
+
+    // 横向
+    function testHorizontal(i, j, player) {
+      let num = 1
+      let winIndex = [{ x: i, y: j }]
+      for (let index = 1; index < 5; index++) {
+        const curIndex = j - index
+        if (curIndex < 0 || num === 5 || gaps[i][curIndex] !== player) break
+        num += 1
+        winIndex.push({ x: i, y: curIndex })
+        console.log('左', index)
+      }
+      for (let index = 1; index < 5; index++) {
+        const curIndex = j + index
+        if (curIndex > xLength - 1 || num === 5 || gaps[i][curIndex] !== player) break
+        num += 1
+        winIndex.push({ x: i, y: curIndex })
+        console.log('右', index)
+      }
+      return {
+        isWin: num === 5,
+        winIndex
+      }
+    }
+    // 纵向
+    function testVertical(i, j, player) {
+      let num = 1
+      let winIndex = [{ x: i, y: j }]
+      for (let index = 1; index < 5; index++) {
+        const curIndex = i - index
+        if (curIndex < 0 || num === 5 || gaps[curIndex][j] !== player) break
+        num += 1
+        winIndex.push({ x: curIndex, y: j })
+        console.log('上', index)
+      }
+      for (let index = 1; index < 5; index++) {
+        const curIndex = i + index
+        if (curIndex > yLength - 1 || num === 5 || gaps[curIndex][j] !== player) break
+        num += 1
+        winIndex.push({ x: curIndex, y: j })
+        console.log('下', index)
+      }
+      return {
+        isWin: num === 5,
+        winIndex
+      }
+    }
+    // 斜向1
+    function testDiagonal(i, j, player) {
+      let num = 1
+      let winIndex = [{ x: i, y: j }]
+      // 左上 ↖
+      for (let index = 1; index < 5; index++) {
+        const curIIndex = i - index
+        const curJIndex = j - index
+        if (curIIndex < 0 || curJIndex < 0 || num === 5 || gaps[curIIndex][curJIndex] !== player) break
+        num += 1
+        winIndex.push({ x: curIIndex, y: curJIndex })
+        console.log('左上 ↖', index)
+      }
+      // 右下 ↘
+      for (let index = 1; index < 5; index++) {
+        const curIIndex = i + index
+        const curJIndex = j + index
+        if (curIIndex > yLength - 1 || curJIndex > xLength - 1 || num === 5 || gaps[curIIndex][curJIndex] !== player) break
+        num += 1
+        winIndex.push({ x: curIIndex, y: curJIndex })
+        console.log('右下 ↘', index)
+      }
+      return {
+        isWin: num === 5,
+        winIndex
+      }
+    }
+    // 斜向2
+    function testDiagonal2(i, j, player) {
+      let num = 1
+      let winIndex = [{ x: i, y: j }]
+      // 右上 ↗
+      for (let index = 1; index < 5; index++) {
+        const curIIndex = i - index
+        const curJIndex = j + index
+        if (curIIndex < 0 || curJIndex > xLength - 1 || num === 5 || gaps[curIIndex][curJIndex] !== player) break
+        num += 1
+        winIndex.push({ x: curIIndex, y: curJIndex })
+        console.log('右上 ↗', index)
+      }
+      // 左下 ↙
+      for (let index = 1; index < 5; index++) {
+        const curIIndex = i + index
+        const curJIndex = j - index
+        if (curIIndex > yLength - 1 || curJIndex < 0 || num === 5 || gaps[curIIndex][curJIndex] !== player) break
+        num += 1
+        winIndex.push({ x: curIIndex, y: curJIndex })
+        console.log('左下 ↙', index)
+      }
+      return {
+        isWin: num === 5,
+        winIndex
+      }
+    }
+
+    function reSet() {
+      location.reload()
+    }
+
+
+  </script>
+</body>
+</html>

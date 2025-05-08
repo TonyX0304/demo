@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      overflow: hidden;
+    }
+
+    canvas {
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas></canvas>
+
+  <script>
+    const cv = document.querySelector('canvas')
+    const ctx = cv.getContext('2d')
+
+    function init() {
+      cv.width = window.innerWidth
+      cv.height = window.innerHeight
+    }
+
+    function getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    class Point {
+      constructor() {
+        this.x = getRandom(5, window.innerWidth - 5)
+        this.y = getRandom(5, window.innerHeight - 5)
+        this.xFlag = Math.random() >= 0.5
+        this.yFlag = Math.random() >= 0.5
+        this.speed = Math.random() >= 0.5 ? 2 : 1
+      }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI)
+        ctx.fillStyle = '#fff'
+        ctx.fill()
+      }
+    }
+
+    class Graph {
+      constructor() {
+        this.points = new Array(100).fill(0).map(() => new Point())
+        this.maxDis = Math.max(window.innerWidth / 15, 60)
+      }
+      draw() {
+        for (let i = 0; i < this.points.length; i++) {
+          const p1 = this.points[i]
+          p1.draw()
+          ctx.beginPath()
+          ctx.moveTo(p1.x, p1.y)
+          for (let j = i + 1; j < this.points.length; j++) {
+            const p2 = this.points[j]
+            const dis = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2)
+            if (dis > this.maxDis) continue
+            ctx.lineTo(p2.x, p2.y)
+            ctx.strokeStyle = `rgba(255,255,255, ${(this.maxDis - dis) / this.maxDis})`
+            ctx.stroke()
+            ctx.closePath()
+          }
+        }
+      }
+    }
+
+    init()
+    let g = new Graph()
+    g.draw()
+
+    setInterval(() => {
+      g.points.forEach(item => {
+        item.x += item.xFlag ? item.speed : -item.speed
+        item.y += item.yFlag ? item.speed : -item.speed
+        if (item.x >= window.innerWidth - 10) item.xFlag = false
+        if (item.x <= 10) item.xFlag = true
+        if (item.y >= window.innerHeight - 10) item.yFlag = false
+        if (item.y <= 10) item.yFlag = true
+      })
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      g.draw()
+    }, 50)
+
+    function debounce(fn, time = 100) {
+      let timer = null
+      return function (...arg) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          fn.apply(this, arg)
+        }, time)
+      }
+    }
+
+    function throttle(fn, time = 100) {
+      let timer = null
+      return function (...arg) {
+        if (timer) return
+        timer = setTimeout(()=>{
+          fn.apply(this, arg)
+          timer = null
+        }, time)
+      }
+    }
+    
+    function resize() {
+      init()
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      g = new Graph()
+      g.draw()
+    }
+    
+    window.addEventListener('resize', throttle(resize, 100))
+  </script>
+</body>
+
+</html>
