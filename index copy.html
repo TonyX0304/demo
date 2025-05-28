@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    .virtual-scroll {
+      position: relative;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .scroll-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    .visible-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    .visible-items>div {
+      background-color: lightblue;
+      padding: 20px;
+      border-radius: 5px;
+    }
+  </style>
+
+  <div class="virtual-scroll" id="container">
+    <div class="scroll-placeholder"></div>
+    <div class="visible-items"></div>
+  </div>
+
+  <script>
+    const container = document.getElementById("container");
+    const placeholder = container.querySelector(".scroll-placeholder");
+    const visibleItems = container.querySelector(".visible-items");
+
+    const data = Array(100).fill().map((_, i) => `Item ${i + 1}`);
+    const itemHeight = 280;
+    const containerHeight = window.innerHeight; // 减去一些边距
+
+    // 设置占位高度
+    placeholder.style.height = `${data.length * itemHeight}px`;
+
+    function renderVisibleItems(scrollTop) {
+      const startIndex = Math.floor(scrollTop / itemHeight);
+      const endIndex = startIndex + Math.ceil(containerHeight / itemHeight *3) + 6;
+      console.log('[ scrollTop ] >', startIndex, endIndex);
+
+      visibleItems.innerHTML = data
+        .slice(startIndex, endIndex)
+        .map((item, i) => `<div><img src="https://picsum.photos/500/${itemHeight}?random=${startIndex+i}"></div>`)
+        .join("");
+
+      // 调整可见项的位置（模拟滚动）
+      visibleItems.style.transform = `translateY(${startIndex * itemHeight}px)`;
+    }
+
+    container.addEventListener("scroll", () => {
+      renderVisibleItems(container.scrollTop);
+    });
+
+    // 初始渲染
+    renderVisibleItems(0);
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      width: 100%;
+    }
+  </style>
+</body>
+</html>
