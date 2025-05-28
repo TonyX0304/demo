@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>拖拽排序</title>
   <style>
     * {
       margin: 0;
       padding: 0;
+    }
+     
+    h1 {
+      margin: 20px auto;
+      text-align: center
     }
 
     .container {
@@ -15,7 +20,7 @@
       grid-template-columns: 1fr;
       gap: 10px;
       width: 50%;
-      margin: 50px auto;
+      margin: auto;
       position: relative;
     }
     .container::before{
@@ -49,6 +54,7 @@
   </style>
 </head>
 <body>
+  <h1>拖拽排序</h1>
   <div class="container" style="--top: 0px; --opacity:0;">
     <div draggable="true">1</div>
     <div draggable="true">2</div>
