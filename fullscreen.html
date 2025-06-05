@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>fullscreenchange 事件示例</h1>
+  <div id="fullscreen-div">
+    wehwfjdbfbdsgsdfmg
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum eligendi omnis necessitatibus ad quae possimus numquam exercitationem laudantium tempore ab error distinctio facere, dolor earum sequi cum totam quam recusandae!
+    <button id="toggle-fullscreen">切换全屏模式</button>
+  </div>
+  <script>
+    const fullscreenDiv = document.getElementById('fullscreen-div');
+    const toggleButton = document.getElementById('toggle-fullscreen');
+
+    toggleButton.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        fullscreenDiv.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        console.log('进入全屏模式');
+      } else {
+        console.log('退出全屏模式');
+      }
+    });   
+  </script>
+</body>
+</html>

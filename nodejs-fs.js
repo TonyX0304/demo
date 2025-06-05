@@ -54,9 +54,39 @@ function renameByCreationTime(videoPath, index) {
     }
   })
 }
+
+
+// 使用示例
+emptyDirSync(outPutDir);
+
 // 批量处理当前目录所有 MP4 文件
 fs.readdirSync(fileDir).forEach((file, index) => {
   // if (file.endsWith('.mp4')) 
   renameByCreationTime(fileDir + '/' + file, index);
 });
 
+
+function emptyDirSync(dirPath) {
+  // 检查目录是否存在
+  if (!fs.existsSync(dirPath)) {
+    return;
+  }
+
+  // 读取目录内容
+  const files = fs.readdirSync(dirPath);
+
+  // 遍历并删除每个文件/子目录
+  for (const file of files) {
+    const filePath = path.join(dirPath, file);
+    const stat = fs.statSync(filePath);
+
+    if (stat.isDirectory()) {
+      // 递归删除子目录
+      emptyDirSync(filePath);
+      fs.rmdirSync(filePath);
+    } else {
+      // 删除文件
+      fs.unlinkSync(filePath);
+    }
+  }
+}
