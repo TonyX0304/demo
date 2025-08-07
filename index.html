@@ -7,7 +7,9 @@
 </head>
 <body>
   <div class="flex">
-    <div>洪陀国商作这以身啊如临了如服派，才文艳事救书刑极，怒文瞠明是，书就下使要绪，国三领倒你，久惜见，生你但釜们死斯大保往斯新担五，看法洪，不皮李留得幕啦盲松谭领着，许褒种解等从这丐他外的，高生向总的入天一目胜冷的了高言普商，之召生者才张不人不的衣嗣人，五颜不。</div>
+    <div>
+      洪陀国商作这以身啊如临了如服派，才文艳事救书刑极，怒文瞠明是，书就下使要绪，国三领倒你，久惜见，生你但釜们死斯大保往斯新担五，看法洪，不皮李留得幕啦盲松谭领着，许褒种解等从这丐他外的，高生向总的入天一目胜冷的了高言普商，之召生者才张不人不的衣嗣人，五颜不。
+    </div>
     <div>item 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus necessitatibus cupiditate sunt aliquid
       nostrum. Inventore quis dolor cupiditate. Quod laboriosam inventore nihil cumque? Sunt animi officia nesciunt quis
       asperiores harum!</div>
@@ -62,5 +64,511 @@
       width: 100%;
     }
   </style>
+
+
+  <script>
+    // var a = 1
+    // function test() {
+    //   a = 12
+    // }
+    // test()
+    // console.log('[ a ] >', a)
+    // console.log(window.a)
+
+    // var a = 10;
+    // (function () {
+    //   console.log(a)
+    //   a = 5
+    //   // console.log(window.a === a)
+    //   var a = 20;
+    //   console.log(a)
+    // })()
+
+
+    // const arrayLike = {
+    //   0: 'first',
+    //   1: 'second',
+    //   5: 'five',
+    //   length: 6
+    // };
+    // const arrayLike2 = Array.from(arrayLike)
+
+    // console.log('[ arrayLike,arrayLike2 ] >', arrayLike, arrayLike2)
+
+    // const string = 'string'
+    // console.log(Array.from(string))
+
+
+
+    // let obj = { 1: 222, 2: 123, 5: 888 };
+    // const result = Array.from({ length: 12 }).map((_, index) => obj[index +
+    //   1] || null);
+    // console.log(result)
+
+
+    // // 随机生成一个长度为 10 的整数类型的数组，例如 [2, 10, 3, 4, 5, 11, 10, 11, 20]，
+    // // 将其排列成一个新数组，要求新数组形式如下，例如 [[2, 3, 4, 5], [10, 11], [20]]。
+    // const arr = [2, 10, 3, 4, 5, 11, 10, 11, 20]
+    // const newArr = []
+
+    // for(let i=0; i<arr.length; i++) {
+    //   const index = Math.floor(arr[i] / 10)
+    //   if (!newArr[index]) {
+    //     newArr[index] = []
+    //   }
+    //   !newArr[index].includes(arr[i]) && newArr[index].push(arr[i])
+    // }
+    // console.log('[ newArr ] >', newArr)
+
+    // var a = 10;
+    // var obj = {
+    //   a: 20
+    // }
+    // // fn();
+    // function fn() {
+    //   this.b = 232
+    //   console.log(this.a);
+    //   console.log('[ this ] >', this)
+    //   console.log(new.target)
+    // }
+    // console.log('[ a ] >', a)
+
+    // for (var index = 0; index < 10; index++) {
+    //   (function (index) {
+    //     setTimeout(() => {
+    //       console.log(index)
+    //     }, 0)
+    //   })(index)
+    // }
+
+
+    // TODO: 未完成
+    // BUG：未完待续
+    // function test(a, b, c) {
+    //   // return a + b + c
+    //   let ar = []
+    //   return (...arg) => {
+    //     ar = [...ar, ...arg]
+    //     console.log('[ ar ] >', ar)
+    //     debugger
+    //     if (ar.length >= test.length) {
+    //       return ar[0] + ar[1] + ar[2]
+    //     } else {
+    //       return test(...ar)
+    //     }
+    //   }
+    // }
+    // const aa = test(1)
+    // console.log('[ aa ] >', aa)
+
+
+    // var arr1=[1,2,3,[4,5],[6,[7,[8]]]]
+    // /**
+    //  * * 使用递归的方式处理
+    //  * * wrap 内保存结果 ret
+    //  * * 返回一个递归函数
+    //  * */
+    // function warp(arr) {
+    //   const res = []
+    //   arr.forEach(element => {
+    //     if (Array.isArray(element)) {
+    //       res.push(...warp(element))
+    //     } else {
+    //       res.push(element)
+    //     }
+    //   })
+    //   return res
+    // }
+    // console.log(warp(arr1))
+
+
+    // // var a = ?;
+    // var a = {
+    //   value: 1,
+    //   toString: function() {
+    //     return this.value++
+    //   }
+    // }
+    // if (a == 1 && a == 2 && a == 3) {
+    //   console.log(1);
+    // }
+
+    /**
+     * BFC
+     * 1. html根元素
+     * 2. 浮动元素
+     * 3. display: table | flex
+     * 4. overflow： 不为visible
+     * 5：position: absolute | fixed
+     *
+     * BFC作用
+     * 1. 清除浮动
+     * 2. 防止同一BFC容器中相邻元素外边距重叠
+     *
+    **/
+
+    //  第 42 题：实现一个 sleep 函数
+    //  比如 sleep(1000) 意味着等待 1000 毫秒，可从 Promise、Generator、Async/Await
+    //  等角度实现
+    // function sleep(time) {
+    //   const start = new Date().getTime()
+    //   while (new Date().getTime() - start <= time) { }
+    // }
+
+    // const sleep = (time) => {
+    //   return new Promise(resolve => setTimeout(resolve,
+    //     time))
+    // }
+    // sleep(1000).then(() => { })
+    // console.time('start')
+    // sleep(1000)
+    // console.timeEnd('start')
+
+
+    // 第 43 题：使用 sort() 对数组[3, 15, 8, 29, 102, 22] 进
+    // 行排序，输出结果
+    // 输出：[102, 15, 22, 29, 3, 8]
+
+    // let arr = [3, 15, 8, 29, 102, 22]
+    // function toSort(arr) {
+    //   return arr.sort((a,b) => {
+    //     return (''+a).codePointAt(0) - (''+b).codePointAt(0)
+    //   })
+    // }
+    // console.log(toSort(arr));
+
+
+    // var obj = {
+    //   '2': 3,
+    //   '3': 4,
+    //   'length': 2,
+    //   'splice': Array.prototype.splice,
+    //   'push':
+    //     Array.prototype.push
+    // }
+    // obj.push(1)
+    // obj.push(2)
+    // console.log(obj)
+
+
+    // 第 67 题：数组编程题
+    // 随机生成一个长度为 10 的整数类型的数组，例如 [2, 10, 3, 4, 5, 11, 10, 11, 20]，
+    // 将其排列成一个新数组，要求新数组形式如下，例如 [[2, 3, 4, 5], [10, 11], [20]]。
+    // function randomArr(len) {
+    //   const arr = []
+    //   for(let i=0; i<len;i++) {
+    //     arr.push(Math.floor(Math.random() * 100 + 1))
+    //   }
+    //   return arr
+    // }
+    // const arr = randomArr(10)
+    // function arrFn(arr) {
+    //   const newArr = []
+    //   arr.forEach(item => {
+    //     const index = Math.floor(item / 10)
+    //     if (!newArr[index]) newArr[index] = []
+    //     newArr[index].push(item)
+    //   })
+    //   return newArr
+    // }
+    // console.log('[ arr ] >', arr)
+    // console.log('[ arrFn(arr) ] >', arrFn(arr).filter(item => item))
+
+
+    // 已知有字符串 foo=”get-element-by-id”,写一个 function 将其转化成驼峰表示法”
+    // getElementById”
+    // function toCamelCase(str) {
+    //   const arr = str.split('-')
+    //   let res = arr[0]
+    //   for (let i = 1; i < arr.length; i++) {
+    //     res += arr[i].replace(/^([a-zA-Z])(.*)/, (match, p1, p2) => {
+    //       return p1.toUpperCase() + p2
+    //     })
+    //   }
+    //   return res
+    // }
+    // function toCamelCase(str) { // 【优化版本】
+    //   return str.replace(/-([a-zA-Z])/g, (_, letter) => letter.toUpperCase());
+    // }
+    // const foo = 'get-element-by-id'
+    // console.log('[ toCamelCase(foo) ] >', toCamelCase(foo))
+
+
+    // 40、有这样一个 URL：http://item.taobao.com/item.htm?a=1&b=2&c=&d=xxx&e，
+    // 请写一段 JS 程序提取 URL 中的各个 GET 参数(参数名和参数个数不确定)，将其
+    // 按 key-value 形式返回到一个 json 结构中，如{a:’1′, b:’2′, c:”, d:’
+    // xxx’, e:undefined}
+    // function getParams(url) {
+    //   const arr = url.split(/[\?\&]+/).slice(1)
+    //   const obj = {}
+    //   console.log('[ arr ] >', arr)
+    //   for (let i = 0; i < arr.length; i++) {
+    //     const elementArr = arr[i].split('=')
+    //     // if (!elementArr.length || !elementArr[0]) continue
+    //     obj[elementArr[0]] = elementArr.length < 2 ? undefined : elementArr[1]
+    //   }
+    //   return obj
+    // }
+    // function parseUrlParams(url) {
+    //   const params = {};
+    //   const urlObj = new URL(url);
+
+    //   urlObj.searchParams.forEach((value, key) => {
+    //     params[key] = value === '' ? undefined : value;
+    //   });
+
+    //   return params;
+    // }
+    // const url = 'http://item.taobao.com/item.htm??a=1&b=2&c=&&d=xxx&e'
+    // console.log('[ getParams(url) ] >', getParams(url))
+
+
+    // 100、将数字 12345678 转化成 RMB 形式 如： 12,345,678
+    // function setNum(num) {
+    //   return ('' + num).replace(/\B(?=(\d{3})+$)/g, ',')
+    // }
+    // const num = 123456780
+    // console.log('[ setNum(num) ] >', setNum(num))
+
+    // 101、生成 5 个不同的随机数； 范围是 [1, 10]
+    // function randomArr() {
+    //   const arr = []
+    //   for (; arr.length < 5;) {
+    //     const num = Math.floor(Math.random() * 10) + 1
+    //     if (!arr.includes(num)) arr.push(num)
+    //   }
+    //   return arr
+    // }
+    // function randomArr(arr) {
+    //   const num = Math.floor(Math.random() * 10) + 1
+    //   if (!arr.includes(num)) arr.push(num)
+    //   if (arr.length < 5) {
+    //     randomArr(arr)
+    //   }
+    //   return arr
+    // }
+    // console.log('[ randomArr() ] >', randomArr([]))
+
+
+    // function f1() {
+    //   var tmp = 1;
+    //   this.x = 3;
+    //   console.log(tmp); 
+    //   console.log(this.x) 
+    // }
+    // var obj = new f1(); //1 3
+    // console.log(obj.x) // 3
+    // console.log(f1()); // 1 3
+
+    // 111、下面输出多少？
+    // var o1 = new Object();
+    // var o2 = o1;
+    // o2.name = "CSSer";
+    // console.log(o1.name); // CSSer
+
+
+    // function changeObjectProperty(o) {
+    //   o.siteUrl = "http://www.csser.com/";
+    //   o = new Object();
+    //   o.siteUrl = "http://www.popcg.com/";
+    // }
+    // var CSSer = new Object();
+    // changeObjectProperty(CSSer);
+    // console.log(CSSer.siteUrl); // http://www.csser.com/
+
+
+    // var t = true;
+    // setTimeout(function () {
+    //   console.log(123);
+    //   t = false;
+    // }, 1000);
+    // while (t) { }// 此时是一个死循环，永远不可能执行 setTimeout 中的回调函数
+    // console.log('end');
+
+
+
+    // 149 、 specify(‘hello,world’)//=>’h,e,l,l,o,w,o,r,l,d’ 实 现 specify函数
+    // function specify(str) {
+    //   return str.replace(/,/g, '').replace(/\B(?=\S+)/g, ',')
+    // }
+    // const str = 'hello,world'
+    // console.log('[ specify(str) ] >', specify(str))
+
+
+    // 223、删除与某个字符相邻且相同的字符，比如 fdaffdaaklfjklja 字符串处理
+    // 之后成为“fdafdaklfjklja”
+    // function func(str) {
+    //   let res = ''
+    //   for (let index = 0; index < str.length; index++) {
+    //     const item = str[index];
+    //     if (item !== res[res.length-1]) res += item
+    //   }
+    //   return res
+    // }
+    // const str = 'fdaffdaaklfjklja'
+    // console.log('[ func(str) ] >', func(str))
+    // console.log('[ func(str) ] >', 'fdafdaklfjklja')
+
+
+    // 226、用 JavaScript 实现冒泡排序。数据为 23、45、18、37、92、13、24
+    // function sortFunc(arr) {
+    //   let num = 0
+    //   for (let i = 0; i < arr.length; i++) {
+    //     for (let j = 0; j < arr.length - i - 1; j++) {
+    //       console.log(++num)
+    //       if (arr[j] > arr[j + 1]) {
+    //         [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+    //       }
+    //       console.log('[ i, j ] >', i, j, arr)
+    //     }
+
+    //   }
+    //   return arr
+    // }
+    // const arr = [23, 45, 18, 37, 92, 13, 24]
+    // console.log('[ sortFunc(arr) ] >', sortFunc(arr))
+
+
+    // var iNum = 0;
+    // for (var i = 1; i < 10; i++) {
+    //   if (i % 5 == 0) {
+    //     continue;
+    //   }
+    //   iNum++;
+    // }
+    // console.log('[ iNum ] >', iNum) // 8
+
+
+    // var t = 10;
+    // function test(t) {
+    //   var t = t++;//此时的 t 是一个局部变量，全局变量没有任何变化
+    //   console.log(t);//此时的结果又是多少？ // 10
+    // }
+    // test(t);
+    // console.log(t); // 10
+
+
+
+    // var t = 10;
+    // function test(test) {
+    //   var t = test++;
+    // } 
+    // test(t);
+    // console.log(t); //10
+
+
+    // var t = 10;
+    // function test(test) {
+    //   t = test++;
+    // } 
+    // test(t);
+    // console.log(t); // 10
+
+
+    // var t = 10;
+    // function test(test) {
+    //   t = t + test; 
+    //   console.log(t); // NaN
+    //   var t = 3;
+    // } 
+    // test(t);
+    // console.log(t); // 10
+
+
+    // console.log(a);//是一个函数
+    // var a = 3;
+    // function a() { }
+    // console.log(a);////3
+
+
+    // (function (x) {
+    //   delete x;
+    //   alert(x);
+    // })(1 + 5)
+
+
+    // async function async1() {
+    //   console.log('async1 start')
+    //   await async2()
+    //   console.log('async1 end')
+    // }
+    // async function async2() {
+    //   console.log('async2')
+    // }
+    // console.log('script start')
+    // setTimeout(function () {
+    //   console.log('settimeout')
+    // })
+    // new Promise(function (resolve) {
+    //   console.log('promise1')
+    //   resolve()
+    // }).then(function () {
+    //   console.log('promise2')
+    // })
+    // async1()
+    // console.log('script end')
+
+    // script start
+    // promise1
+    // async1 start
+    // async2
+    // script end
+    // promise2
+    // async1 end
+    // settimeout
+
+
+    // // 如何把一个字符串的大小写取反（大写变小写小写变大写），例如 ’AbC' 变成 'aBc' 。
+    // const string = 'AbdsfSDSFDSBF'
+    // let newString = ''
+    // for (let index = 0; index < string.length; index++) {
+    //   const element = string[index];
+    //   const newElement = element === element.toUpperCase() ? element.toLowerCase() : element.toUpperCase()
+    //   newString += newElement
+    // }
+
+    // console.log('[ newString ] >', newString)
+
+
+    //   const arg = {
+    //     a: 2,
+    //     b: 3,
+    //   }
+
+    //  let arr = {...arg}
+    //  console.log('[ arr ] >', arr)
+
+
+    // async function async1() {
+    //   console.log('async1 start');
+    //   await async2();
+    //   console.log('asnyc1 end');
+    // }
+    // async function async2() {
+    //   console.log('async2');
+    // }
+    // console.log('script start');
+    // setTimeout(() => {
+    //   console.log('setTimeOut');
+    // }, 0);
+    // async1();
+    // new Promise(function (reslove) {
+    //   console.log('promise1');
+    //   reslove();
+    // }).then(function () {
+    //   console.log('promise2');
+    // })
+    // console.log('script end');
+
+    // script start
+    // async1 start
+    // async2
+    // promise1
+    // script end
+    // asnyc1 end
+    // promise2
+    // setTimeOut
+
+  </script>
 </body>
 </html>
